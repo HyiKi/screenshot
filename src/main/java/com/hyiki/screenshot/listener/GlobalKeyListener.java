@@ -8,6 +8,7 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import com.hyiki.screenshot.enums.SystemEnum;
 import com.hyiki.screenshot.frame.CaptureFrame;
 import com.hyiki.screenshot.frame.MouseComponent;
+import com.hyiki.screenshot.utils.SystemUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashSet;
@@ -34,7 +35,7 @@ public class GlobalKeyListener implements NativeKeyListener {
         this.captureFrame = captureFrame;
         this.mouseComponent = mouseComponent;
         // init os
-        os = getOS();
+        os = SystemUtils.getOS();
     }
 
     @Override
@@ -145,37 +146,6 @@ public class GlobalKeyListener implements NativeKeyListener {
         }
 
         GlobalScreen.addNativeKeyListener(this);
-    }
-
-    public SystemEnum getOS() {
-        String osName = System.getProperty("os.name");
-        log.info("osName is {}", osName);
-        if (osName == null) {
-            throw new RuntimeException("os.name not found");
-        }
-        osName = osName.toLowerCase(Locale.ENGLISH);
-        // match
-        if (osName.contains("windows")) {
-            return SystemEnum.WINDOWS;
-        } else if (osName.contains("linux") ||
-                osName.contains("mpe/ix") ||
-                osName.contains("freebsd") ||
-                osName.contains("openbsd") ||
-                osName.contains("irix") ||
-                osName.contains("digital unix") ||
-                osName.contains("unix") ||
-                osName.contains("mac os x")) {
-            return SystemEnum.UNIX;
-        } else if (osName.contains("sun os") ||
-                osName.contains("sunos") ||
-                osName.contains("solaris")) {
-            return SystemEnum.POSIX_UNIX;
-        } else if (osName.contains("hp-ux") ||
-                osName.contains("aix")) {
-            return SystemEnum.POSIX_UNIX;
-        } else {
-            return SystemEnum.OTHER;
-        }
     }
 
 }
