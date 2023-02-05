@@ -7,9 +7,24 @@
     <groupId>com.hyiki</groupId>
     <artifactId>screenshot</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <properties>
         <jnativehook.version>2.2.2</jnativehook.version>
+        <lombok.version>1.18.16</lombok.version>
+        <slf4j.verison>1.7.25</slf4j.verison>
+        <hutool.version>5.7.16</hutool.version>
     </properties>
 
     <repositories>
@@ -26,6 +41,25 @@
             <artifactId>jnativehook</artifactId>
             <version>${jnativehook.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.verison}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>
