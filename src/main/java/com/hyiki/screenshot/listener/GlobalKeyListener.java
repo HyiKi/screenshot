@@ -122,6 +122,7 @@ public class GlobalKeyListener implements NativeKeyListener {
          * CTRL + Q 开启截图
          */
         private void startScreenshot() {
+            log.info("startScreenshot");
             captureFrame.setVisible(true);
         }
 
@@ -129,6 +130,7 @@ public class GlobalKeyListener implements NativeKeyListener {
          * ESC 关闭截图
          */
         private void finishAndClearScreenshot() {
+            log.info("finishAndClearScreenshot");
             captureFrame.setVisible(false);
             mouseComponent.remove();
         }

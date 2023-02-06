@@ -30,14 +30,14 @@ public class SystemUtils {
 
     public static SystemEnum getOS() {
         String osName = System.getProperty("os.name");
-        log.info("osName is {}", osName);
         if (osName == null) {
             throw new RuntimeException("os.name not found");
         }
+        SystemEnum system = null;
         osName = osName.toLowerCase(Locale.ENGLISH);
         // match
         if (osName.contains("windows")) {
-            return SystemEnum.WINDOWS;
+            system = SystemEnum.WINDOWS;
         } else if (osName.contains("linux") ||
                 osName.contains("mpe/ix") ||
                 osName.contains("freebsd") ||
@@ -46,17 +46,19 @@ public class SystemUtils {
                 osName.contains("digital unix") ||
                 osName.contains("unix") ||
                 osName.contains("mac os x")) {
-            return SystemEnum.UNIX;
+            system = SystemEnum.UNIX;
         } else if (osName.contains("sun os") ||
                 osName.contains("sunos") ||
                 osName.contains("solaris")) {
-            return SystemEnum.POSIX_UNIX;
+            system = SystemEnum.POSIX_UNIX;
         } else if (osName.contains("hp-ux") ||
                 osName.contains("aix")) {
-            return SystemEnum.POSIX_UNIX;
+            system = SystemEnum.POSIX_UNIX;
         } else {
-            return SystemEnum.OTHER;
+            system = SystemEnum.OTHER;
         }
+        log.info("[os.name] {} [system] {}", osName, system);
+        return system;
     }
 
 }
