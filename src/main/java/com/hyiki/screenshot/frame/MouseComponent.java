@@ -96,12 +96,20 @@ public class MouseComponent extends JComponent {
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         Graphics2D g = (Graphics2D) graphics;
+        // 矩阵填充
         if (squares != null) {
             g.setColor(getBorderColor());
             g.draw(squares);
             g.setColor(getFillColor());
             g.fill(squares);
         }
+        // 全屏填充
+        else {
+            Rectangle screenRect = getScreenRectangle();
+            g.setColor(getFillColor());
+            g.fill(screenRect);
+        }
+        // 文字绘制
         if (contents != null) {
             for (ContentDTO content : contents) {
                 processContent(g, content);
@@ -114,6 +122,12 @@ public class MouseComponent extends JComponent {
             RUN_AFTER.remove();
         }
         log.info("paintComponent");
+    }
+
+    private Rectangle getScreenRectangle() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Rectangle2D.Double screenRect = new Rectangle2D.Double(0, 0, screenSize.getWidth(), screenSize.getHeight());
+        return convert2Rectangle(screenRect);
     }
 
     /**
@@ -187,6 +201,14 @@ public class MouseComponent extends JComponent {
         return new Color(255, 255, 255, 255);
     }
 
+    private Rectangle convert2Rectangle(Rectangle2D squares) {
+        int x = (int) squares.getX();
+        int y = (int) squares.getY();
+        int w = (int) squares.getWidth();
+        int h = (int) squares.getHeight();
+        return new Rectangle(x, y, w, h);
+    }
+
     private class MouseHandler extends MouseAdapter {
 
         /**
@@ -238,14 +260,6 @@ public class MouseComponent extends JComponent {
             }
             // 在后台运行，不退出
 //            System.exit(0);
-        }
-
-        private Rectangle convert2Rectangle(Rectangle2D squares) {
-            int x = (int) squares.getX();
-            int y = (int) squares.getY();
-            int w = (int) squares.getWidth();
-            int h = (int) squares.getHeight();
-            return new Rectangle(x, y, w, h);
         }
 
         /**

@@ -131,8 +131,8 @@ public class GlobalKeyListener implements NativeKeyListener {
          */
         private void finishAndClearScreenshot() {
             log.info("finishAndClearScreenshot");
-            captureFrame.setVisible(false);
             mouseComponent.remove();
+            captureFrame.setVisible(false);
         }
 
     }
