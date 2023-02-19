@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 鼠标控件
+ *
  * @author wanghaoxuan
  */
 @Slf4j
@@ -96,16 +97,42 @@ public class MouseComponent extends JComponent {
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         Graphics2D g = (Graphics2D) graphics;
+        Rectangle screenRect = getScreenRectangle();
         // 矩阵填充
         if (squares != null) {
-            g.setColor(getBorderColor());
-            g.draw(squares);
+//            g.setColor(getBorderColor());
+//            g.draw(squares);
             g.setColor(getFillColor());
-            g.fill(squares);
+            // rectangle 1
+            double leftTopX = screenRect.getX();
+            double leftTopY = screenRect.getY();
+            // top
+            Rectangle2D rectangleTop = buildRectangle(leftTopX,
+                    screenRect.getWidth(),
+                    leftTopY,
+                    squares.getY());
+            g.fill(rectangleTop);
+            // left
+            Rectangle2D rectangleLeft = buildRectangle(leftTopX,
+                    squares.getX(),
+                    squares.getY(),
+                    squares.getY() + squares.getHeight());
+            g.fill(rectangleLeft);
+            // right
+            Rectangle2D rectangleRight = buildRectangle(squares.getX() + squares.getWidth(),
+                    screenRect.getWidth(),
+                    squares.getY(),
+                    squares.getY() + squares.getHeight());
+            g.fill(rectangleRight);
+            // bottom
+            Rectangle2D rectangleBottom = buildRectangle(leftTopX,
+                    screenRect.getWidth(),
+                    squares.getY() + squares.getHeight(),
+                    screenRect.getHeight());
+            g.fill(rectangleBottom);
         }
         // 全屏填充
         else {
-            Rectangle screenRect = getScreenRectangle();
             g.setColor(getFillColor());
             g.fill(screenRect);
         }
@@ -198,7 +225,7 @@ public class MouseComponent extends JComponent {
      * font color
      */
     public Color getFontColor() {
-        return new Color(255, 255, 255, 255);
+        return new Color(0, 0, 0, 255);
     }
 
     private Rectangle convert2Rectangle(Rectangle2D squares) {
