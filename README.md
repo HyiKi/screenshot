@@ -19,6 +19,6 @@
 
 ## 效果演示
 
-![sample1](.\src\main\resources\sample1.png)
+![sample1](https://github.com/HyiKi/screenshot/blob/main/src/main/resources/sample1.png)
 
-![sample1](.\src\main\resources\sample2.png)
+![sample2](https://github.com/HyiKi/screenshot/blob/main/src/main/resources/sample2.png)
