@@ -1,11 +1,13 @@
 package com.hyiki.screenshot.utils;
 
 import cn.hutool.core.swing.clipboard.ImageSelection;
+import com.hyiki.screenshot.convertor.RectangleConvertor;
 import com.hyiki.screenshot.enums.SystemEnum;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Locale;
 
@@ -26,6 +28,12 @@ public class SystemUtils {
         // img
         ImageSelection imageSelection = new ImageSelection(capture);
         clipboard.setContents(imageSelection, null);
+    }
+
+    public static Rectangle getFullScreenRectangle() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Rectangle2D.Double screenRect = new Rectangle2D.Double(0, 0, screenSize.getWidth(), screenSize.getHeight());
+        return RectangleConvertor.convert2Rectangle(screenRect);
     }
 
     public static SystemEnum getOS() {

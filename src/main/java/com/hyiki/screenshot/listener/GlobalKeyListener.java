@@ -96,6 +96,9 @@ public class GlobalKeyListener implements NativeKeyListener {
                     if (keySet.contains("Ctrl") && keySet.contains("Q")) {
                         startScreenshot();
                     }
+                    if (keySet.contains("Print Screen")) {
+                        saveFullScreenToClipboard();
+                    }
                     break;
                 case UNIX:
                     if (keySet.contains("⌃") && keySet.contains("Q")) {
@@ -115,6 +118,19 @@ public class GlobalKeyListener implements NativeKeyListener {
                         finishAndClearScreenshot();
                     }
                     break;
+            }
+        }
+
+        /**
+         * Print Screen 保存整个屏幕到剪贴板
+         */
+        private void saveFullScreenToClipboard() {
+            log.info("saveFullScreenToClipboard");
+            captureFrame.setVisible(false);
+            try {
+                SystemUtils.captureToClipboard(SystemUtils.getFullScreenRectangle());
+            } catch (Exception e) {
+                log.error("saveFullScreenToClipboard error {}", e.getMessage(), e);
             }
         }
 

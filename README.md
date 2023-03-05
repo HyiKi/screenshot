@@ -8,7 +8,8 @@
 
 ## 使用
 
-- Ctrl + Q：截图
+- Ctrl + Q：框选截图，按住鼠标拖动框选区域，双击截屏至clipboard
+- Print Screen：全屏截图，将Full Screen保存至clipboard
 - Esc：退出
 
 ## 问答

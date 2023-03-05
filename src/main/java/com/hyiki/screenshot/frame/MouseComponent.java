@@ -1,5 +1,6 @@
 package com.hyiki.screenshot.frame;
 
+import com.hyiki.screenshot.convertor.RectangleConvertor;
 import com.hyiki.screenshot.dtos.ContentDTO;
 import com.hyiki.screenshot.utils.SystemUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -97,7 +98,7 @@ public class MouseComponent extends JComponent {
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         Graphics2D g = (Graphics2D) graphics;
-        Rectangle screenRect = getScreenRectangle();
+        Rectangle screenRect = SystemUtils.getFullScreenRectangle();
         // 矩阵填充
         if (squares != null) {
 //            g.setColor(getBorderColor());
@@ -149,12 +150,6 @@ public class MouseComponent extends JComponent {
             RUN_AFTER.remove();
         }
         log.info("paintComponent");
-    }
-
-    private Rectangle getScreenRectangle() {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Rectangle2D.Double screenRect = new Rectangle2D.Double(0, 0, screenSize.getWidth(), screenSize.getHeight());
-        return convert2Rectangle(screenRect);
     }
 
     /**
@@ -228,14 +223,6 @@ public class MouseComponent extends JComponent {
         return new Color(0, 0, 0, 255);
     }
 
-    private Rectangle convert2Rectangle(Rectangle2D squares) {
-        int x = (int) squares.getX();
-        int y = (int) squares.getY();
-        int w = (int) squares.getWidth();
-        int h = (int) squares.getHeight();
-        return new Rectangle(x, y, w, h);
-    }
-
     private class MouseHandler extends MouseAdapter {
 
         /**
@@ -262,7 +249,7 @@ public class MouseComponent extends JComponent {
             int doubleClickCount = 2;
             if (find(current) && event.getClickCount() >= doubleClickCount) {
                 // capture rectangle
-                Rectangle rectangle = convert2Rectangle(squares);
+                Rectangle rectangle = RectangleConvertor.convert2Rectangle(squares);
                 remove();
                 // 这里触发截图动作
                 registerRunAfter(() -> this.saveCaptureAndExit(rectangle));
