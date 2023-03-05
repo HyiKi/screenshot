@@ -1,4 +1,6 @@
-package com.hyiki.screenshot.frame;
+package com.hyiki.screenshot.starter;
+
+import com.hyiki.screenshot.frame.CaptureFrame;
 
 import javax.swing.*;
 import java.awt.*;

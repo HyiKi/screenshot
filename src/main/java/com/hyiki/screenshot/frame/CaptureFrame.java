@@ -54,13 +54,13 @@ public class CaptureFrame extends JFrame {
         byte[] trayIconBytes = Base64.getDecoder().decode(getIcon().getBytes());
         // 显示在托盘中的图标
         ImageIcon icon = new ImageIcon(trayIconBytes);
+        // 这句很重要，没有会导致图片显示不出来
+        trayIcon.setImageAutoSize(true);
         // 构造一个右键弹出式菜单
         PopupMenu pop = new PopupMenu();
         MenuItem exit = new MenuItem("退出");
         pop.add(exit);
         trayIcon = new TrayIcon(icon.getImage(), "screenshot", pop);
-        // 这句很重要，没有会导致图片显示不出来
-        trayIcon.setImageAutoSize(true);
         // 注册退出监听器
         exit.addActionListener(e -> {
             // e means actionEvent
@@ -103,6 +103,8 @@ public class CaptureFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setUndecorated(true);
         this.setBackground(getBackgroundColor());
+        // 窗口置顶
+        this.setAlwaysOnTop(true);
         // 应用图标
         byte[] trayIconBytes = Base64.getDecoder().decode(getIcon().getBytes());
         // 显示在应用中的图标
