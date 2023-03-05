@@ -56,7 +56,7 @@ public class CaptureFrame extends JFrame {
         ImageIcon icon = new ImageIcon(trayIconBytes);
         // 构造一个右键弹出式菜单
         PopupMenu pop = new PopupMenu();
-        MenuItem exit = new MenuItem("退出");
+        MenuItem exit = new MenuItem("Exit");
         pop.add(exit);
         trayIcon = new TrayIcon(icon.getImage(), "screenshot", pop);
         // 这句很重要，没有会导致图片显示不出来
