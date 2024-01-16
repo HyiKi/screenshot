@@ -2,6 +2,8 @@ package com.hyiki.screenshot.frame;
 
 import com.hyiki.screenshot.convertor.RectangleConvertor;
 import com.hyiki.screenshot.dtos.ContentDTO;
+import com.hyiki.screenshot.handler.CallForContentHandler;
+import com.hyiki.screenshot.handler.DefaultContentHandler;
 import com.hyiki.screenshot.utils.SystemUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -61,6 +63,8 @@ public class MouseComponent extends JComponent {
 
     private static final ThreadLocal<Runnable> RUN_AFTER = new ThreadLocal<>();
 
+    private final CallForContentHandler contentHandler;
+
 //    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private static final ExecutorService executorService = new ThreadPoolExecutor(1,
@@ -70,14 +74,19 @@ public class MouseComponent extends JComponent {
             new LinkedBlockingQueue<>(),
             r -> new Thread(r, "capture-thread-" + r.hashCode()));
 
+    public MouseComponent(CaptureFrame captureFrame) {
+        this(captureFrame, new DefaultContentHandler());
+    }
+
     /**
      * 构造方法
      */
-    public MouseComponent(CaptureFrame captureFrame) {
+    public MouseComponent(CaptureFrame captureFrame, CallForContentHandler handler) {
         squares = null;
         pressPoint = null;
         dragPoint = null;
         releasePoint = null;
+        this.contentHandler = handler;
         this.captureFrame = captureFrame;
         addMouseListener(new MouseHandler());
         addMouseMotionListener(new MouseMotionHandler());
@@ -285,20 +294,13 @@ public class MouseComponent extends JComponent {
             Point current = event.getPoint();
             releasePoint = new Point(current);
             if (!Objects.equals(squares, contentSquare)) {
-                contents = callForContents();
+                contents = contentHandler.callForContents(squares);
                 repaint();
             }
             if (squares == null && pressPoint != null) {
                 draw(pressPoint, releasePoint);
             }
             log.info("[released]" + current.getX() + "," + current.getY());
-        }
-
-        /**
-         * 外部调用获取框内文字
-         */
-        private List<ContentDTO> callForContents() {
-            return null;
         }
     }
 

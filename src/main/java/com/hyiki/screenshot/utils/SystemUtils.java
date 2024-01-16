@@ -1,14 +1,18 @@
 package com.hyiki.screenshot.utils;
 
 import cn.hutool.core.swing.clipboard.ImageSelection;
+import cn.hutool.core.util.RandomUtil;
 import com.hyiki.screenshot.convertor.RectangleConvertor;
 import com.hyiki.screenshot.enums.SystemEnum;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 /**
@@ -20,6 +24,12 @@ import java.util.Locale;
  */
 @Slf4j
 public class SystemUtils {
+
+    public static void captureRectangle(Rectangle screenRect, String filePath) throws Exception {
+        File file = new File(filePath);
+        BufferedImage capture = new Robot().createScreenCapture(screenRect);
+        ImageIO.write(capture, "jpg", file);
+    }
 
     public static void captureToClipboard(Rectangle screenRect) throws Exception {
         BufferedImage capture = new Robot().createScreenCapture(screenRect);

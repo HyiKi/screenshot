@@ -10,8 +10,5 @@
         <module name="screenshot" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="screenshot" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>
